@@ -1,0 +1,7 @@
+﻿  Main.cpp
+C:\c++\CS201L\CS201L_Lab14\Lab 14\Lab 14\MyList.h(115): error C4716: 'MyList<int>::pop_front': must return a value
+C:\c++\CS201L\CS201L_Lab14\Lab 14\Lab 14\MyList.h(127): error C4716: 'MyList<int>::pop': must return a value
+C:\c++\CS201L\CS201L_Lab14\Lab 14\Lab 14\MyList.h(103): error C4716: 'MyList<int>::push_back': must return a value
+C:\c++\CS201L\CS201L_Lab14\Lab 14\Lab 14\MyList.h(121): error C4716: 'MyList<int>::pop_back': must return a value
+C:\c++\CS201L\CS201L_Lab14\Lab 14\Lab 14\MyList.h(103): error C4716: 'MyList<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >::push_back': must return a value
+C:\c++\CS201L\CS201L_Lab14\Lab 14\Lab 14\MyList.h(127): error C4716: 'MyList<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >::pop': must return a value
