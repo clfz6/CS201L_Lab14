@@ -1,13 +1,15 @@
 #pragma once
 #include <string> 
+#include <list>
+#include <iostream>
 using namespace std; 
 
 class MyListException {
 public: 
-    MyListException(const std::string& M = "List Exception") { Msg = M; }
-    std::string what() const { return Msg; }
+    MyListException(const string& M = "List Exception") { Msg = M; }
+    string what() const { return Msg; }
 private: 
-    std::string Msg; 
+    string Msg; 
 };
 
 template <class T> 
@@ -90,44 +92,135 @@ const MyList<T>& MyList<T>::operator= (const MyList<T>& rhs) {
 template <class T>
 void MyList<T>::clear() {
  // TODO: Write this code. 
+    while (Count > 0)
+    {
+        Node<T>* ptr = Head;
+        Head = Head->Next;
+        delete ptr;
+        Count--;
+    }
 }
 
 template <class T>
 bool MyList<T>::push_front(const T& item) {
  // TODO: Write this code. 
+    try
+    {
+        Node<T>* node = new Node<T>(item);
+    }
+    catch (MyListException e)
+    {
+        cout << e.what() << endl;
+        return false;
+    }
+    Node<T>* node = new Node<T>(item);
+    node->Next = Head;
+    Head = node;
+    
+    return true;
 }
 
 template <class T>
 bool MyList<T>::push_back(const T& item) {
  // TODO: Write this code. 
+    Node<T>* node = new Node<T>(item);
+    if (Head == nullptr)
+    {
+        Head = node;
+        Tail = node;
+        Count++;
+    }
+    else if (Count == 1)
+    {
+        Tail = node;
+        Head->Next = Tail;
+        Tail->Prev = Head;
+        Count++;
+    }
+    else
+    {
+        Tail->Next = node;
+        node->Prev = Tail;
+        Tail = Tail->Next;
+        Count++;
+    }
+    return true;
 }
 
 template <class T> 
-bool push_ordered(const T& item) {
+bool MyList<T>::push_ordered(const T& item) {
     // TODO: Write this code. 
+    Node<T>* node = new Node<T>(item);
+    Node<T>* current_node = Head;
+    while (current_node != nullptr)
+    {
+        if (current_node->data < node->data && current_node->Next->data >= node->data)
+        {
+            node->Next = current_node->Next;
+            current_node->Next->Prev = node;
+            current_node->Next = node;
+            node->Prev = current_node;
+            Count++;
+        }
+        current_node = current_node->Next;
+    }
+    return true;
 }
 
 
 template <class T>
 T MyList<T>::pop_front() {
        // TODO: Write this code. 
-
+    T data_return;
+    data_return = Head->data;
+    Node<T>* ptr = Head;
+    Head = Head->Next;
+    delete ptr;
+    Count--;
+    return data_return;
 }
 
 template <class T>
 T MyList<T>::pop_back() {
     // TODO: Write this code. 
-    
+    T data_return;
+    data_return = Tail->data;
+    Node<T>* ptr = Tail;
+    Tail = Tail->Prev;
+    Tail->Next = nullptr;
+    delete ptr;
+    Count--;
+    return data_return;
 }
 
 template <class T>
 T MyList<T>::pop(const T& item) {
     // TODO: Write this code. 
-
+    Node<T>* current_node = Head;
+    Node<T>* ptr;
+    while (current_node != nullptr)
+    {
+        if (current_node->data == item)
+        {
+            ptr = current_node;
+            current_node = current_node->Prev;
+            current_node->Next = current_node->Next->Next;
+            current_node->Next->Prev = current_node;
+            delete ptr;
+            Count--;
+        }
+        current_node = current_node->Next;
+    }
+    return item;
 }
 
 template<class T> 
 void MyList<T>::print(ostream& out) const {
     // TODO: Write this code. 
-
+    Node<T>* current_node = Head;
+    while (current_node != nullptr)
+    {
+        cout << current_node->data << endl;
+        current_node = current_node->Next;
+    }
 }
