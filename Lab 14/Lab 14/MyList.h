@@ -115,14 +115,24 @@ bool MyList<T>::push_front(const T& item) {
     }
     Node<T>* node = new Node<T>(item);
     node->Next = Head;
+    Head->Prev = node;
     Head = node;
-    
+    Count++;
     return true;
 }
 
 template <class T>
 bool MyList<T>::push_back(const T& item) {
  // TODO: Write this code. 
+    try
+    {
+        Node<T>* node = new Node<T>(item);
+    }
+    catch (MyListException e)
+    {
+        cout << e.what() << endl;
+        return false;
+    }
     Node<T>* node = new Node<T>(item);
     if (Head == nullptr)
     {
@@ -150,6 +160,15 @@ bool MyList<T>::push_back(const T& item) {
 template <class T> 
 bool MyList<T>::push_ordered(const T& item) {
     // TODO: Write this code. 
+    try
+    {
+        Node<T>* node = new Node<T>(item);
+    }
+    catch (MyListException e)
+    {
+        cout << e.what() << endl;
+        return false;
+    }
     Node<T>* node = new Node<T>(item);
     Node<T>* current_node = Head;
     while (current_node != nullptr)
